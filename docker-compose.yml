@@ -1,0 +1,30 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: survivor
+      POSTGRES_PASSWORD: survivor
+      POSTGRES_DB: survivor
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql+asyncpg://survivor:survivor@db:5432/survivor
+      # optional overrides via shell env / --env-file .env (copy from .env.example):
+      # JWT_SECRET, CORS_ORIGINS, MEDIA_DIR, MAX_UPLOAD_MB
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+    volumes:
+      - mediadata:/data/media
+
+volumes:
+  pgdata:
+  mediadata:

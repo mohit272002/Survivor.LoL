@@ -1,0 +1,18 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv/
+
+# App artifacts (never commit)
+*.db
+*.db-journal
+media/
+test_media/
+frontend/dist/
+frontend/node_modules/
+.env
